@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  color: white;
+  background-color: #1a1b23;
+}
+
+/* Hide scrollbars */
+::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom background colors for swap interface */
+.bg-eth {
+  background-color: #627EEA;
+}
+
+input::placeholder {
+  color: #9B9B9B;
+}
+
