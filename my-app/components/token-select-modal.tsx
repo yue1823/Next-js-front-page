@@ -5,6 +5,7 @@ import Image from "next/image"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import APt_logo from ".//logo/Aptos_mark_BLK.svg";
+import USDT_logo from "../components/logo/tether-usdt-logo.svg";
 
 interface Token {
   symbol: string
@@ -20,7 +21,7 @@ interface TokenSelectModalProps {
 
 const popularTokens: Token[] = [
   { symbol: "APT", name: "Ethereum", logo:APt_logo },
-  { symbol: "USDT", name: "Tether", logo: "/placeholder.svg?height=40&width=40" },
+  { symbol: "USDT", name: "Tether", logo: USDT_logo},
   { symbol: "USDC", name: "USD Coin", logo: "/placeholder.svg?height=40&width=40" },
 ]
 

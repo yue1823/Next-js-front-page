@@ -4,6 +4,8 @@ import { Box } from 'lucide-react'
 import Link from "next/link"
 import { GoogleAnalytics } from "@/components/google-analytics"
 import "./globals.css"
+import DIffusion_logo from "../components/logo/diffusion svg.svg"
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -25,8 +27,8 @@ export default function RootLayout({
             <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
                 <div className="flex items-center gap-6">
                     <Link href="/" className="flex items-center gap-2 text-white">
-                        <Box className="h-8 w-8" />
-                        <span className="font-bold text-xl">LOGO</span>
+                        <Image src={DIffusion_logo} alt={"diffusion logo"} className="h-8 w-8" />
+                        <span className="font-bold text-xl">Diffusion</span>
                     </Link>
                     <Link href="/" className="text-white hover:text-gray-300 transition">
                         Dashboard

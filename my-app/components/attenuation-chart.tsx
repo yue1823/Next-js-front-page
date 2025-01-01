@@ -20,22 +20,31 @@ export function AttenuationChart({ b, a }: AttenuationChartProps) {
     useEffect(() => {
         if (!chartContainerRef.current) return
 
-        const c = Math.exp(b * a)
+        const d = 3; // 第幾天開始指數增長
+        const e = 28 / Math.log(3); // 使指數增長在第30天達到1
+        const c = 1; // 第30天後的值
 
-        // Generate data points
-        const xValues = []
-        const yValues = []
+        const xValues = [];
+        const yValues = [];
 
-        for (let x = 0; x <= 10; x += 0.1) {
+        for (let x = 1; x <= 30; x++) {
             let y;
-            if (x < a) {
-                y = Math.exp(b * x);
+            if (x < d) {
+                y = 0.2; // 第一天和第二天為0.2
+            } else if (x === 30) {
+                y = c; // 第30天確保為1
             } else {
-                y = c;
+                // 指數增長部分
+                y = 0.2 * Math.pow(5, (x - d) / e);
             }
-            yValues.push(y)
-            xValues.push(x)
+            if(y < 1){
+                yValues.push(y);
+            }else{
+                yValues.push(1);
+            }
+            xValues.push(x);
         }
+
 
         const data = [{
             x: xValues,
@@ -102,7 +111,7 @@ export function AttenuationChart({ b, a }: AttenuationChartProps) {
         }
     }, [a, b])
 
-    return <div ref={chartContainerRef} className="w-5/12 h-full" />
+    return <div ref={chartContainerRef} className="w-full h-full" />
 }
 
 export function ExponentialDecayChart({ A, k, C }: ExponentialDecayChartProps) {
@@ -189,5 +198,5 @@ export function ExponentialDecayChart({ A, k, C }: ExponentialDecayChartProps) {
         }
     }, [A, k, C])
 
-    return <div ref={chartContainerRef}  className="w-5/12 h-full" />
+    return <div ref={chartContainerRef}  className="w-full h-full" />
 }

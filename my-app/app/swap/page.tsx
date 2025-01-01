@@ -1,17 +1,16 @@
 'use client'
 
 import { useState } from "react"
-import { ChevronDown, ArrowDown, ArrowLeft } from 'lucide-react'
+import { ChevronDown, ArrowLeft, ArrowUpDown } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { TokenSelectModal } from "@/components/token-select-modal"
 import { TradingChart } from "@/components/trading-chart"
-import { AttenuationChart,ExponentialDecayChart } from "@/components/attenuation-chart"
 import { motion, AnimatePresence } from "framer-motion"
 import dynamic from 'next/dynamic'
 
-const TimeAttenuationChart = dynamic(() => import('@/components/attenuation-chart').then(mod => mod.ExponentialDecayChart), { ssr: false })
 const DynamicAttenuationChart = dynamic(() => import('@/components/attenuation-chart').then(mod => mod.AttenuationChart), { ssr: false })
+const DynamicExponentialDecayChart = dynamic(() => import('@/components/attenuation-chart').then(mod => mod.ExponentialDecayChart), { ssr: false })
 
 interface Token {
   symbol: string
@@ -44,6 +43,15 @@ export default function Swap() {
     } else {
       setSelectedBuyToken(token)
     }
+  }
+
+  const handleSwapTokens = () => {
+    const tempToken = selectedSellToken
+    setSelectedSellToken(selectedBuyToken || tempToken)
+    setSelectedBuyToken(tempToken)
+    const tempAmount = sellAmount
+    setSellAmount(buyAmount)
+    setBuyAmount(tempAmount)
   }
 
   if (!isAdvancedMode) {
@@ -85,17 +93,43 @@ export default function Swap() {
                     className="absolute inset-0 bg-[#1E2128] z-10 p-4"
                 >
                   <h2 className="text-white text-xl font-bold mb-4">Attenuation Coefficient</h2>
-                  <div className="grid grid-cols-1 gap-4 h-[calc(100%-2rem)]">
-                    <div className="bg-[#2C2F36] rounded-xl p-4">
-                      <h3 className="text-white font-medium mb-2">Time-based Attenuation</h3>
-                      <div className="h-[calc(100%-2rem)]">
-                        <DynamicAttenuationChart b={0.05} a={1} />
+                  <div className="grid grid-cols-4 gap-4 h-[calc(100%-2rem)]">
+                    <div className="col-span-3 bg-[#2C2F36] rounded-xl p-4">
+                      <div className="grid grid-rows-2 gap-2 h-full">
+                        <div>
+                          <h3 className="text-white font-medium mb-1">Time-based Attenuation</h3>
+                          <div className="h-[calc(100%-1.5rem)]">
+                            <DynamicAttenuationChart b={0.05} a={1} />
+                          </div>
+                        </div>
+                        <div>
+                          <h3 className="text-white font-medium mb-1">Price-based Attenuation</h3>
+                          <div className="h-[calc(100%-1.5rem)]">
+                            <DynamicExponentialDecayChart A={0.8} k={0.05} C={0.2} />
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div className="bg-[#2C2F36] rounded-xl p-4">
-                      <h3 className="text-white font-medium mb-2">Price-based Attenuation</h3>
-                      <div className="h-[calc(100%-2rem)]">
-                        <TimeAttenuationChart A={0.8} k={0.05} C={0.2}/>
+                    <div className="col-span-1 grid grid-rows-2 gap-4">
+                      <div className="bg-[#2C2F36] rounded-xl p-4 flex flex-col justify-center items-center">
+                        <h3 className="text-white font-medium mb-2 self-start">Attenuation Coefficient</h3>
+                        <div className="flex flex-col justify-center items-center flex-grow">
+                          <span className="text-4xl font-bold text-[#FF53C9]">0.95</span>
+                          <span className="text-sm text-gray-400 mt-2">Current Value</span>
+                        </div>
+                      </div>
+                      <div className="bg-[#2C2F36] rounded-xl p-4">
+                        <h3 className="text-white font-medium mb-2">Additional Data</h3>
+                        <div className="flex flex-col justify-center h-full">
+                          <div className="mb-2">
+                            <span className="text-sm text-gray-400">Period:</span>
+                            <span className="text-lg font-semibold text-white ml-2">30 days</span>
+                          </div>
+                          <div>
+                            <span className="text-sm text-gray-400">Initial Price:</span>
+                            <span className="text-lg font-semibold text-white ml-2">$1000</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -109,7 +143,7 @@ export default function Swap() {
         <div className="w-full lg:w-[30%] flex flex-col">
           <div className="relative bg-[#1E2128] rounded-[24px] p-3 sm:p-4 flex-grow">
             {/* Left Arrow Oval */}
-            <div className="absolute -left-4 top-1/2 -translate-y-1/2 z-10">
+            <div className="absolute -left-4 top-[27%] -translate-y-1/2 z-10">
               <Button
                   className="rounded-full bg-[#FF53C9] hover:bg-[#FF53C9]/90 p-2"
                   onClick={() => setIsSwipedLeft(!isSwipedLeft)}
@@ -151,10 +185,13 @@ export default function Swap() {
               </div>
 
               {/* Arrow Separator */}
-              <div className="flex justify-center">
-                <div className="bg-[#2C2F36] p-1 sm:p-2 rounded-xl">
-                  <ArrowDown className="h-4 w-4 sm:h-6 sm:w-6 text-[#9B9B9B]" />
-                </div>
+              <div className="flex justify-center -my-2">
+                <button
+                    onClick={handleSwapTokens}
+                    className="bg-[#2C2F36] p-2 sm:p-3 rounded-full hover:bg-[#363A45] transition-colors"
+                >
+                  <ArrowUpDown className="h-4 w-4 sm:h-6 sm:w-6 text-[#9B9B9B]" />
+                </button>
               </div>
 
               {/* Buy Section */}
@@ -164,9 +201,9 @@ export default function Swap() {
                   <input
                       type="text"
                       value={buyAmount}
-                      onChange={(e) => setBuyAmount(e.target.value)}
+                      readOnly
                       placeholder="0"
-                      className="w-full bg-transparent text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white outline-none"
+                      className="w-full bg-transparent text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white outline-none cursor-not-allowed"
                   />
                   <button
                       onClick={() => handleOpenTokenModal('buy')}
