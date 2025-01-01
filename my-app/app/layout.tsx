@@ -3,7 +3,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/Wallet/ThemeProvider";
 import { WalletProvider } from "@/components/Wallet/WalletProvider";
 import { Toaster } from "@/components/ui/toaster";
-import { cn } from "@/lib/utils";
+import {GoogleTagManager} from "@next/third-parties/google";
 import { AutoConnectProvider } from "@/components/Wallet/AutoConnectProvider";
 import { ReactQueryClientProvider } from '@/components/Wallet/ReactQueryClientProvider';
 import Wallet from "./wallet/page";
@@ -12,7 +12,7 @@ import type { Metadata } from "next"
 
 import { Inter } from 'next/font/google'
 import Link from "next/link"
-import { GoogleAnalytics } from "@/components/google-analytics"
+
 
 import DIffusion_logo from "../components/logo/diffusion svg.svg"
 import Image from "next/image";
@@ -33,7 +33,7 @@ export default function RootLayout({
 
         <html lang="en" className="h-full">
         <body className={`${inter.className} bg-[#1a1b23] h-full flex flex-col`}>
-        <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-XXXXXXXXXX'} />
+        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID|| 'G-XXXXXXXXXX'}></GoogleTagManager>
         <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -52,6 +52,9 @@ export default function RootLayout({
                                     </Link>
                                     <Link href="/" className="text-white hover:text-gray-300 transition">
                                         Dashboard
+                                    </Link>
+                                    <Link href="/gamble" className="text-white hover:text-gray-300 transition">
+                                        Gamble
                                     </Link>
                                     <Link href="/swap" className="text-white hover:text-gray-300 transition">
                                         Swap

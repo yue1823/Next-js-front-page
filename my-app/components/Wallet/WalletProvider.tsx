@@ -2,7 +2,7 @@
 
 import { AptosWalletAdapterProvider } from "@aptos-labs/wallet-adapter-react";
 import { BitgetWallet } from "@bitget-wallet/aptos-wallet-adapter";
-import { MSafeWalletAdapter } from "@msafe/aptos-wallet-adapter";
+// import { MSafeWalletAdapter } from "@msafe/aptos-wallet-adapter";
 import { OKXWallet } from "@okwallet/aptos-wallet-adapter";
 import { PontemWallet } from "@pontem/wallet-adapter-plugin";
 import { TrustWallet } from "@trustwallet/aptos-wallet-adapter";
@@ -22,7 +22,7 @@ export const WalletProvider = ({ children }: PropsWithChildren) => {
 
     const wallets = [
         new BitgetWallet(),
-        new MSafeWalletAdapter(),
+        // new MSafeWalletAdapter(),
         new PontemWallet(),
         new TrustWallet(),
         new OKXWallet(),
