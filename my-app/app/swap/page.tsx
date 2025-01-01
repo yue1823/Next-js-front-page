@@ -60,10 +60,10 @@ export default function Swap() {
   return (
       <HeaderFooter>
         <div className="w-full h-full flex justify-center items-center p-4">
-          <div className="w-full max-w-4xl">
+          <div className="w-full max-w-md relative">
             <div className="bg-[#1E2128] rounded-3xl p-6 flex">
               {/* Swap Method Selector */}
-              <div className="flex flex-col space-y-4 mr-6">
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full mr-4 flex flex-col space-y-4">
                 {swapMethods.map((method, index) => (
                     <button
                         key={method}
@@ -191,7 +191,7 @@ export default function Swap() {
               {/* Right Arrow for Side Panel */}
               <button
                   onClick={() => setIsSidePanelOpen(!isSidePanelOpen)}
-                  className="ml-4 self-center"
+                  className="absolute top-1/2 -translate-y-1/2 right-0 translate-x-full ml-4"
               >
                 {isSidePanelOpen ? (
                     <ChevronLeft className="h-6 w-6 text-white" />
@@ -200,18 +200,17 @@ export default function Swap() {
                 )}
               </button>
             </div>
-          </div>
-
-          {/* Side Panel */}
-          <div
-              className={`fixed top-0 right-0 h-full w-80 bg-[#1E2128] p-6 transform transition-transform duration-300 ease-in-out ${
-                  isSidePanelOpen ? 'translate-x-0' : 'translate-x-full'
-              }`}
-          >
-            <h2 className="text-2xl font-bold mb-4">Additional Info</h2>
-            <p className="text-gray-400">
-              This panel can contain additional information or settings for the swap.
-            </p>
+            {/* Side Content */}
+            <div
+                className={`absolute top-1/2 -translate-y-1/2 left-full ml-4 w-full max-w-md bg-[#1E2128] rounded-3xl p-6 transform transition-transform duration-300 ease-in-out ${
+                    isSidePanelOpen ? 'translate-x-0' : 'translate-x-full'
+                }`}
+            >
+              <h2 className="text-2xl font-bold mb-4">Additional Info</h2>
+              <p className="text-gray-400">
+                This panel can contain additional information or settings for the swap.
+              </p>
+            </div>
           </div>
 
           {/* Token Selection Modal */}
@@ -224,4 +223,5 @@ export default function Swap() {
       </HeaderFooter>
   )
 }
+
 
