@@ -2,9 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
-  height: 100%;
-  overflow: hidden;
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -12,14 +11,9 @@ body {
   background-color: #1a1b23;
 }
 
-/* Hide scrollbars */
-::-webkit-scrollbar {
-  display: none;
-}
-
-* {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+/* Allow scrolling on the main website */
+body {
+  overflow-y: auto;
 }
 
 /* Custom background colors for swap interface */
@@ -28,6 +22,56 @@ body {
 }
 
 input::placeholder {
+  color: #9B9B9B;
+}
+
+@keyframes carousel {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-carousel {
+  animation: carousel 20s linear infinite;
+}
+
+/* Add padding to the top of the page to account for the fixed navigation */
+.min-h-screen {
+  padding-top: 4rem;
+}
+
+/* Ensure the navigation doesn't cover content on small screens */
+@media (max-width: 640px) {
+  .min-h-screen {
+    padding-top: 6rem;
+  }
+}
+
+/* Styles for the swap page */
+.bg-#1E2128 {
+  background-color: #1E2128;
+}
+
+.bg-#2C2F36 {
+  background-color: #2C2F36;
+}
+
+.bg-#363A45 {
+  background-color: #363A45;
+}
+
+.bg-#FF53C9 {
+  background-color: #FF53C9;
+}
+
+/*.hover\:bg-#FF53C9/90:hover {*/
+/*                         background-color: rgba(255, 83, 201, 0.9);*/
+/*                       }*/
+
+.text-#9B9B9B {
   color: #9B9B9B;
 }
 
