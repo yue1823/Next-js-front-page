@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import { AutoConnectProvider } from "@/components/Wallet/AutoConnectProvider";
 import { ReactQueryClientProvider } from '@/components/Wallet/ReactQueryClientProvider';
+import Wallet from "./wallet/page";
 
 import type { Metadata } from "next"
 
@@ -59,9 +60,9 @@ export default function RootLayout({
                                         Bridge
                                     </Link>
                                 </div>
-                                <Link href="/wallet" className="text-white hover:text-gray-300 transition">
-                                    Wallet Space
-                                </Link>
+                                <div className="text-white hover:text-gray-300 transition">
+                                    <Wallet></Wallet>
+                                </div>
                             </nav>
                         </header>
                     </WalletProvider>
