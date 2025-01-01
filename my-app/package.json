@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aptos-labs/wallet-adapter-ant-design": "^3.0.23",
     "@aptos-labs/wallet-adapter-react": "^3.7.9",
     "@bitget-wallet/aptos-wallet-adapter": "^0.1.2",
     "@msafe/aptos-wallet-adapter": "^1.1.3",

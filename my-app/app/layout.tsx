@@ -1,9 +1,18 @@
+import "@aptos-labs/wallet-adapter-ant-design/dist/index.css";
+import "./globals.css"
+import { ThemeProvider } from "@/components/Wallet/ThemeProvider";
+import { WalletProvider } from "@/components/Wallet/WalletProvider";
+import { Toaster } from "@/components/ui/toaster";
+import { cn } from "@/lib/utils";
+import { AutoConnectProvider } from "@/components/Wallet/AutoConnectProvider";
+import { ReactQueryClientProvider } from '@/components/Wallet/ReactQueryClientProvider';
+
 import type { Metadata } from "next"
+
 import { Inter } from 'next/font/google'
-import { Box } from 'lucide-react'
 import Link from "next/link"
 import { GoogleAnalytics } from "@/components/google-analytics"
-import "./globals.css"
+
 import DIffusion_logo from "../components/logo/diffusion svg.svg"
 import Image from "next/image";
 
@@ -20,31 +29,46 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
+
         <html lang="en" className="h-full">
         <body className={`${inter.className} bg-[#1a1b23] h-full flex flex-col`}>
         <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-XXXXXXXXXX'} />
-        <header className="flex-shrink-0 border-b border-gray-800">
-            <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
-                <div className="flex items-center gap-6">
-                    <Link href="/" className="flex items-center gap-2 text-white">
-                        <Image src={DIffusion_logo} alt={"diffusion logo"} className="h-8 w-8" />
-                        <span className="font-bold text-xl">Diffusion</span>
-                    </Link>
-                    <Link href="/" className="text-white hover:text-gray-300 transition">
-                        Dashboard
-                    </Link>
-                    <Link href="/swap" className="text-white hover:text-gray-300 transition">
-                        Swap
-                    </Link>
-                    <Link href="/bridge" className="text-white hover:text-gray-300 transition">
-                        Bridge
-                    </Link>
-                </div>
-                <Link href="/wallet" className="text-white hover:text-gray-300 transition">
-                    Wallet Space
-                </Link>
-            </nav>
-        </header>
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+        >
+            <AutoConnectProvider>
+                <ReactQueryClientProvider>
+                    <WalletProvider>
+                        <header className="flex-shrink-0 border-b border-gray-800">
+                            <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
+                                <div className="flex items-center gap-6">
+                                    <Link href="/" className="flex items-center gap-2 text-white">
+                                        <Image src={DIffusion_logo} alt={"diffusion logo"} className="h-8 w-8"/>
+                                        <span className="font-bold text-xl">Diffusion</span>
+                                    </Link>
+                                    <Link href="/" className="text-white hover:text-gray-300 transition">
+                                        Dashboard
+                                    </Link>
+                                    <Link href="/swap" className="text-white hover:text-gray-300 transition">
+                                        Swap
+                                    </Link>
+                                    <Link href="/bridge" className="text-white hover:text-gray-300 transition">
+                                        Bridge
+                                    </Link>
+                                </div>
+                                <Link href="/wallet" className="text-white hover:text-gray-300 transition">
+                                    Wallet Space
+                                </Link>
+                            </nav>
+                        </header>
+                    </WalletProvider>
+                    <Toaster/>
+                </ReactQueryClientProvider>
+            </AutoConnectProvider>
+        </ThemeProvider>
         <main className="flex-grow flex">
             {children}
         </main>
@@ -53,7 +77,8 @@ export default function RootLayout({
                 <Link href="https://github.com" className="text-white hover:text-gray-300">
                     <span className="sr-only">GitHub</span>
                     <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor">
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        <path
+                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                     </svg>
                 </Link>
                 <Link href="https://twitter.com" className="text-white hover:text-gray-300">
