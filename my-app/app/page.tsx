@@ -10,7 +10,7 @@ import StatsSection from '@/components/StatsSection'
 import { motion } from 'framer-motion'
 import Founder2_logo from "../components/logo/kelvin.jpg";
 import Founder1_logo from "../components/logo/yue_logo.svg";
-import logo_1 from "../components/logo/Aptos_mark_BLK.svg";
+import logo_1 from "../components/logo/fixed.png";
 import RoadmapSection from "@/components/RoadmapSection";
 
 
@@ -47,8 +47,9 @@ export default function Home() {
               <div className="flex items-center justify-between h-16">
                 <div className="flex items-center">
                   <Link href="/" className="flex-shrink-0">
-                    <Image src="/logo.svg" alt="Logo" width={32} height={32} />
+                    <Image src={logo_1} alt="Logo" width={32} height={32} className={"scale-150"}/>
                   </Link>
+                  <h3>Diffusion</h3>
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
