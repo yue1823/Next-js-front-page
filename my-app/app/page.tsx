@@ -1,112 +1,242 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
+import { Menu, X } from 'lucide-react'
+import BackgroundAnimation from '@/components/BackgroundAnimation'
+import StatsSection from '@/components/StatsSection'
+import { motion } from 'framer-motion'
+import Founder2_logo from "../components/logo/kelvin.jpg";
+import Founder1_logo from "../components/logo/yue_logo.svg";
+import logo_1 from "../components/logo/Aptos_mark_BLK.svg";
+
 
 export default function Home() {
-    const page2Ref = useRef<HTMLDivElement>(null)
-    const page3Ref = useRef<HTMLDivElement>(null)
+  const page2Ref = useRef<HTMLDivElement>(null)
+  const page3Ref = useRef<HTMLDivElement>(null)
+  const page4Ref = useRef<HTMLDivElement>(null)
+  const page5Ref = useRef<HTMLDivElement>(null)
+  const page6Ref = useRef<HTMLDivElement>(null)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-    const scrollToPage = (pageRef: React.RefObject<HTMLDivElement>) => {
-        pageRef.current?.scrollIntoView({ behavior: 'smooth' })
-    }
+  const scrollToPage = (pageRef: React.RefObject<HTMLDivElement>) => {
+    pageRef.current?.scrollIntoView({ behavior: 'smooth' })
+    setIsMenuOpen(false)
+  }
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const scrollPosition = window.scrollY
-            const windowHeight = window.innerHeight
-            const currentPage = Math.floor(scrollPosition / windowHeight) + 1
+  const navItems = [
+    { name: 'Partners', ref: page2Ref },
+    { name: 'Founders', ref: page3Ref },
+    { name: 'Features', ref: page4Ref },
+    { name: 'Stats', ref: page5Ref },
+    { name: 'Contact', ref: page6Ref },
+  ]
 
-            // Update URL hash based on current page
-            window.history.replaceState(null, '', `#page${currentPage}`)
-        }
-
-        window.addEventListener('scroll', handleScroll)
-        return () => window.removeEventListener('scroll', handleScroll)
-    }, [])
-
-    return (
-        <div className="bg-[#1a1b23] text-white">
-            {/* Navigation buttons */}
-            <div className="fixed top-0 left-0 right-0 z-50 flex justify-center space-x-4 p-4 bg-[#1a1b23] bg-opacity-80">
-                <Button variant="outline" onClick={() => scrollToPage(page2Ref)}>
-                    About
-                </Button>
-                <Button variant="outline" onClick={() => scrollToPage(page3Ref)}>
-                    Features
-                </Button>
-                <Button variant="outline" onClick={() => scrollToPage(page3Ref)}>
-                    Contact
-                </Button>
-            </div>
-
-            {/* Page 1 */}
-            <div className="min-h-screen flex flex-col items-center justify-center p-4">
-                <div className="flex flex-col-reverse md:flex-row w-full max-w-7xl items-center">
-                    <div className="w-full md:w-2/3 pr-0 md:pr-8 mt-8 md:mt-0">
-                        <h1 className="text-2xl md:text-4xl font-bold mb-4">Welcome to Our Crypto Platform</h1>
-                        <p className="text-base md:text-xl text-gray-300 mb-6">
-                            Experience the future of decentralized finance with our cutting-edge crypto trading and management tools.
-                        </p>
-                        <Button asChild>
-                            <Link href="/dashboard">Get Started</Link>
+  return (
+      <div className="relative">
+        <BackgroundAnimation />
+        <div className="relative z-10">
+          {/* Navbar */}
+          <nav className="fixed top-0 left-0 right-0 z-50 bg-opacity-80 backdrop-blur-md">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex items-center justify-between h-16">
+                <div className="flex items-center">
+                  <Link href="/" className="flex-shrink-0">
+                    <Image src="/logo.svg" alt="Logo" width={32} height={32} />
+                  </Link>
+                </div>
+                <div className="hidden md:block">
+                  <div className="ml-10 flex items-baseline space-x-4">
+                    {navItems.map((item) => (
+                        <Button
+                            key={item.name}
+                            variant="ghost"
+                            onClick={() => scrollToPage(item.ref)}
+                        >
+                          {item.name}
                         </Button>
-                    </div>
-                    <div className="w-full md:w-1/3 aspect-square bg-gray-800 rounded-lg overflow-hidden">
-                        <div className="w-full h-full flex items-center justify-center text-2xl">
-                            GIF Placeholder
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Page 2 */}
-            <div ref={page2Ref} className="min-h-screen flex flex-col items-center justify-center p-4">
-                {/* Logo Carousel */}
-                <div className="w-full bg-gray-900 py-8 overflow-hidden mb-12">
-                    <div className="flex animate-carousel">
-                        {[1, 2, 3].map((logo) => (
-                            <div key={logo} className="flex-shrink-0 w-48 h-24 mx-8 bg-gray-800 rounded flex items-center justify-center">
-                                Logo {logo}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Founders Section */}
-                <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">Meet Our Founders</h2>
-                <div className="flex flex-col md:flex-row justify-center items-start space-y-8 md:space-y-0 md:space-x-12">
-                    {[1, 2].map((founder) => (
-                        <div key={founder} className="text-center max-w-sm">
-                            <div className="w-32 h-32 md:w-48 md:h-48 rounded-full bg-gray-800 mb-4 mx-auto"></div>
-                            <h3 className="text-lg md:text-xl font-semibold mb-2">Founder {founder}</h3>
-                            <p className="text-sm md:text-base text-gray-400">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                            </p>
-                        </div>
                     ))}
+                  </div>
                 </div>
+                <div className="md:hidden">
+                  <Button variant="ghost" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                    {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                  </Button>
+                </div>
+              </div>
+            </div>
+            {isMenuOpen && (
+                <div className="md:hidden">
+                  <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    {navItems.map((item) => (
+                        <Button
+                            key={item.name}
+                            variant="ghost"
+                            className="w-full text-left"
+                            onClick={() => scrollToPage(item.ref)}
+                        >
+                          {item.name}
+                        </Button>
+                    ))}
+                  </div>
+                </div>
+            )}
+          </nav>
+
+          {/* Page 1 - Hero */}
+          <div className="relative min-h-screen flex flex-col items-center justify-center p-4 pt-20">
+            <div className="flex flex-col-reverse md:flex-row w-full max-w-7xl items-center">
+              <div className="w-full md:w-2/3 pr-0 md:pr-8 mt-8 md:mt-0">
+                <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+                  Welcome to Diffusion
+                </h1>
+                <p className="text-xl md:text-2xl text-gray-300 mb-8">
+                  Experience the future of decentralized finance with our cutting-edge crypto trading and management tools.
+                </p>
+                <Button asChild className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-6 rounded-full text-lg transition-all duration-300 ease-in-out transform hover:scale-105">
+                  <Link href="/dashboard">Get Started</Link>
+                </Button>
+              </div>
+              <div className="w-full md:w-1/3 aspect-square bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl overflow-hidden shadow-2xl">
+                <div className="w-full h-full flex items-center justify-center text-3xl font-bold text-white">
+                  Crypto GIF
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Page 2 - Partners */}
+          <div ref={page2Ref} className="relative min-h-screen flex flex-col items-center justify-center p-4">
+            <div className="w-full py-12 overflow-hidden">
+              <h2 className="text-3xl md:text-5xl font-bold text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+                Support By
+              </h2>
+              <div className="flex animate-marquee">
+                {[...Array(10)].map((_, index) => (
+                    <div key={index} className="flex-shrink-0 w-48 h-24 mx-8 bg-white bg-opacity-10 rounded-xl flex items-center justify-center backdrop-blur-sm transition-all duration-300 hover:bg-opacity-20 hover:scale-105">
+                      <Image src={`../components/partner/logo-${index + 1}.svg`} alt={`Logo ${index + 1}`} width={120} height={60} />
+                    </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Page 3 - Founders */}
+          <div ref={page3Ref} className="relative min-h-screen flex flex-col items-center justify-center p-4">
+            <h2 className="text-3xl md:text-5xl font-bold mb-16 text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+              Meet Our Founders
+            </h2>
+            <div className="flex flex-col md:flex-row justify-center items-start space-y-12 md:space-y-0 md:space-x-16">
+              <div key={1} className="text-center max-w-sm group">
+                <div
+                    className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 mb-6 mx-auto overflow-hidden transition-all duration-300 group-hover:scale-105 shadow-xl flex items-center justify-center">
+                  <Image src={Founder1_logo} alt={`Founder ${1}`} width={256} height={256} className="object-cover object-bottom scale-150 "/>
+                </div>
+                <h3 className="text-2xl font-semibold mb-3">Alex Yue</h3>
+                <p className="text-gray-300">
+                  Visionary leader with extensive experience in blockchain technology and decentralized finance.
+                </p>
+              </div>
+              <div key={2} className="text-center max-w-sm group">
+                <div
+                    className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 mb-6 mx-auto overflow-hidden transition-all duration-300 group-hover:scale-105 shadow-xl">
+                  <Image src={Founder2_logo} alt={`Founder ${2}`} width={256} height={256}
+                         className="object-cover"/>
+                </div>
+                <h3 className="text-2xl font-semibold mb-3">Kelvin</h3>
+                <p className="text-gray-300">
+                  Visionary leader with extensive experience in blockchain technology and decentralized finance.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Page 4 - Features */}
+          <div ref={page4Ref} className="relative min-h-screen flex flex-col items-center justify-center p-4">
+            <h2 className="text-3xl md:text-5xl font-bold mb-16 text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+              Our Features
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 w-full max-w-7xl">
+              {[
+                {
+                  title: "Advanced Trading",
+                  description: "Access powerful trading tools and real-time market data for informed decision-making.",
+                  icon: "📈"
+                },
+                {
+                  title: "Safety transacrtion",
+                  description: "Store your crypto assets safely with our state-of-the-art, multi-layer security system.", icon: "🔒" },
+                { title: "Cross-Chain Swaps", description: "Effortlessly exchange assets across different blockchain networks with our intuitive interface.", icon: "🔄" }
+              ].map((feature, index) => (
+                  <div key={index} className="bg-white bg-opacity-5 backdrop-blur-sm rounded-2xl p-8 transition-all duration-300 hover:bg-opacity-10 hover:scale-105 group">
+                    <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">{feature.icon}</div>
+                    <h3 className="text-2xl font-semibold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">{feature.title}</h3>
+                    <p className="text-gray-300">{feature.description}</p>
+                  </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Page 5 - Stats */}
+          <div ref={page5Ref} className="relative min-h-screen">
+
+            <StatsSection />
+          </div>
+
+          {/* Page 6 - Contact */}
+          <div ref={page6Ref} className="relative min-h-screen flex flex-col items-center justify-center p-4">
+            <div className="w-full max-w-4xl text-center">
+              <h2 className="text-3xl md:text-5xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+                Get in Touch
+              </h2>
+              <p className="text-xl text-gray-300 mb-12">
+                Have questions or want to learn more? We'd love to hear from you!
+              </p>
+              <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-8 rounded-full text-lg transition-all duration-300 ease-in-out transform hover:scale-105">
+                Contact Us
+              </Button>
             </div>
 
-            {/* Page 3 */}
-            <div ref={page3Ref} className="min-h-screen flex flex-col items-center justify-center p-4">
-                <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Our Features</h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-7xl">
-                    {[
-                        { title: "Advanced Trading", description: "Access powerful trading tools and real-time market data for informed decision-making." },
-                        { title: "Secure Wallet", description: "Store your crypto assets safely with our state-of-the-art, multi-layer security system." },
-                        { title: "Cross-Chain Swaps", description: "Effortlessly exchange assets across different blockchain networks with our intuitive interface." }
-                    ].map((feature, index) => (
-                        <div key={index} className="bg-gray-800 rounded-lg p-6">
-                            <h3 className="text-lg md:text-xl font-semibold mb-4">{feature.title}</h3>
-                            <p className="text-sm md:text-base text-gray-400">{feature.description}</p>
-                        </div>
-                    ))}
+            {/* Footer */}
+            <footer className="w-full mt-24 pb-8">
+              <div className="max-w-4xl mx-auto text-center">
+                <div className="flex justify-center space-x-6">
+                  <Link
+                      href="#"
+                      className="text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-white/10"
+                      aria-label="Twitter/X"
+                  >
+                    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                  </Link>
+                  <Link
+                      href="#"
+                      className="text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-white/10"
+                      aria-label="Discord"
+                  >
+                    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor">
+                      <path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                    </svg>
+                  </Link>
+                  <Link
+                      href="#"
+                      className="text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-white/10"
+                      aria-label="GitHub"
+                  >
+                    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor">
+                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                  </Link>
                 </div>
-            </div>
+              </div>
+            </footer>
+          </div>
         </div>
-    )
+      </div>
+  )
 }
+
 

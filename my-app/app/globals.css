@@ -8,7 +8,6 @@ html {
 
 body {
   color: white;
-  background-color: #1a1b23;
 }
 
 /* Allow scrolling on the main website */
@@ -25,7 +24,7 @@ input::placeholder {
   color: #9B9B9B;
 }
 
-@keyframes carousel {
+@keyframes marquee {
   0% {
     transform: translateX(100%);
   }
@@ -34,8 +33,8 @@ input::placeholder {
   }
 }
 
-.animate-carousel {
-  animation: carousel 20s linear infinite;
+.animate-marquee {
+  animation: marquee 40s linear infinite;
 }
 
 /* Add padding to the top of the page to account for the fixed navigation */
@@ -67,11 +66,47 @@ input::placeholder {
   background-color: #FF53C9;
 }
 
-/*.hover\:bg-#FF53C9/90:hover {*/
-/*                         background-color: rgba(255, 83, 201, 0.9);*/
-/*                       }*/
+.hover\:bg-#FF53C9/90:hover {
+  background-color: rgba(255, 83, 201, 0.9);
+}
 
-.text-#9B9B9B {
+.text-#9B9B9B{
   color: #9B9B9B;
+}
+
+/* Aceternity UI inspired styles */
+.backdrop-blur-md {
+  backdrop-filter: blur(12px);
+}
+
+.bg-opacity-80 {
+  --tw-bg-opacity: 0.8;
+}
+
+.shadow-2xl {
+  --tw-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.hover\:scale-105:hover {
+  --tw-scale-x: 1.05;
+  --tw-scale-y: 1.05;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+/* New styles for background animation */
+.relative {
+  position: relative;
+  z-index: 1;
+}
+
+.content-overlay {
+  background-color: rgba(26, 27, 35, 0.7);
 }
 
