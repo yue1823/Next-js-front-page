@@ -135,17 +135,19 @@ export default function Home() {
                   <Image src={Founder1_logo} alt={`Founder ${1}`} width={256} height={256} className="object-cover object-bottom scale-150 "/>
                 </div>
                 <h3 className="text-2xl font-semibold mb-3">Alex Yue</h3>
+                <h5 className="text-gray-500 font-semibold mb-3" >Chief Executive Officer</h5>
                 <p className="text-gray-300">
                   Visionary leader with extensive experience in blockchain technology and decentralized finance.
                 </p>
               </div>
               <div key={2} className="text-center max-w-sm group">
                 <div
-                    className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 mb-6 mx-auto overflow-hidden transition-all duration-300 group-hover:scale-105 shadow-xl">
+                    className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 mb-6 mx-auto overflow-hidden transition-all duration-300 group-hover:scale-105 shadow-xl flex items-center justify-center">
                   <Image src={Founder2_logo} alt={`Founder ${2}`} width={256} height={256}
                          className="object-cover"/>
                 </div>
                 <h3 className="text-2xl font-semibold mb-3">Kelvin</h3>
+                <h5 className="text-gray-500 font-semibold mb-3">Chief Business Manager</h5>
                 <p className="text-gray-300">
                   Visionary leader with extensive experience in blockchain technology and decentralized finance.
                 </p>
@@ -163,12 +165,12 @@ export default function Home() {
                 {
                   title: "Advanced Trading",
                   description: "Access powerful trading tools and real-time market data for informed decision-making.",
-                  icon: "📈"
+                  icon: " 📈"
                 },
                 {
-                  title: "Safety transacrtion",
-                  description: "Store your crypto assets safely with our state-of-the-art, multi-layer security system.", icon: "🔒" },
-                { title: "Cross-Chain Swaps", description: "Effortlessly exchange assets across different blockchain networks with our intuitive interface.", icon: "🔄" }
+                  title: "Safety transaction.",
+                  description: "Stay your crypto assets safely with our state-of-the-art, multi-layer security system.", icon: " 🔒" },
+                { title: "Gamble coin", description: "Cutting-edge business model to maximize users profits and reduce risk.", icon: "🪙" }
               ].map((feature, index) => (
                   <div key={index} className="bg-white bg-opacity-5 backdrop-blur-sm rounded-2xl p-8 transition-all duration-300 hover:bg-opacity-10 hover:scale-105 group">
                     <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">{feature.icon}</div>

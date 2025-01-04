@@ -42,19 +42,19 @@ export default function StatsSection() {
     const stats = [
         {
             number: 10,
-            description: "Years in the business trying to build this business from the ground up.",
+            description: "Billion Tvl will be our target.",
         },
         {
             number: 100,
-            description: "People Fought trying to establish our brand.",
+            description: " motion to grow our business as soon as possible..",
         },
         {
             number: 25724,
-            description: "Fight Club Attendance so that everyone knows the first rule.",
+            description: "Users who succeeded in granting profit on our application.",
         },
         {
             number: 69420,
-            description: "People trying to get access but guess what? they can't.",
+            description: "People are trying to gain entry, but guess what? They cannot.",
         },
     ];
 
@@ -67,7 +67,7 @@ export default function StatsSection() {
                     transition={{ duration: 0.7 }}
                     className="text-4xl md:text-6xl font-bold mb-6"
                 >
-                    Trusted by fighters all over the world
+                    Trusted by Users all over the world
                 </motion.h2>
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
@@ -75,7 +75,7 @@ export default function StatsSection() {
                     transition={{ duration: 0.7, delay: 0.2 }}
                     className="text-xl md:text-2xl text-gray-300 mb-16 max-w-4xl mx-auto"
                 >
-                    We are a team of experienced fighters and boxers who are passionate about helping you grow your business.
+                    We are a team of experienced developer and investor who are passionate about helping you grant your profit.
                 </motion.p>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
                     {stats.map((stat, index) => (
