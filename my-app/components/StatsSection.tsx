@@ -49,11 +49,11 @@ export default function StatsSection() {
             description: " motion to grow our business as soon as possible..",
         },
         {
-            number: 25724,
+            number: 1,
             description: "Users who succeeded in granting profit on our application.",
         },
         {
-            number: 69420,
+            number: 10,
             description: "People are trying to gain entry, but guess what? They cannot.",
         },
     ];

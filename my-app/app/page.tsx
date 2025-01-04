@@ -96,7 +96,7 @@ export default function Home() {
                   Welcome to Diffusion
                 </h1>
                 <p className="text-xl md:text-2xl text-gray-300 mb-8">
-                  Experience the future of decentralized finance with our cutting-edge crypto trading and management tools.
+                  Experience the future of decentralized finance with our cutting-edge crypto trading and gamble.
                 </p>
                 <Button asChild className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-6 rounded-full text-lg transition-all duration-300 ease-in-out transform hover:scale-105">
                   <Link href="/dashboard">Get Started</Link>
@@ -152,7 +152,7 @@ export default function Home() {
                 <h3 className="text-2xl font-semibold mb-3">Kelvin</h3>
                 <h5 className="text-gray-500 font-semibold mb-3">Chief Business Manager</h5>
                 <p className="text-gray-300">
-                  Visionary leader with extensive experience in blockchain technology and decentralized finance.
+                  Lead the group in pursuing success and serve as a senior in public relations and marketing.
                 </p>
               </div>
             </div>
@@ -214,7 +214,7 @@ export default function Home() {
               <div className="max-w-4xl mx-auto text-center">
                 <div className="flex justify-center space-x-6">
                   <Link
-                      href="#"
+                      href="https://x.com/yue_1678"
                       className="text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-white/10"
                       aria-label="Twitter/X"
                   >
@@ -232,7 +232,7 @@ export default function Home() {
                     </svg>
                   </Link>
                   <Link
-                      href="#"
+                      href="https://github.com/yue1823/diffusion"
                       className="text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-white/10"
                       aria-label="GitHub"
                   >
