@@ -11,6 +11,7 @@ import { motion } from 'framer-motion'
 import Founder2_logo from "../components/logo/kelvin.jpg";
 import Founder1_logo from "../components/logo/yue_logo.svg";
 import logo_1 from "../components/logo/Aptos_mark_BLK.svg";
+import RoadmapSection from "@/components/RoadmapSection";
 
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
   const page4Ref = useRef<HTMLDivElement>(null)
   const page5Ref = useRef<HTMLDivElement>(null)
   const page6Ref = useRef<HTMLDivElement>(null)
+  const page7Ref = useRef<HTMLDivElement>(null)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const scrollToPage = (pageRef: React.RefObject<HTMLDivElement>) => {
@@ -31,7 +33,8 @@ export default function Home() {
     { name: 'Founders', ref: page3Ref },
     { name: 'Features', ref: page4Ref },
     { name: 'Stats', ref: page5Ref },
-    { name: 'Contact', ref: page6Ref },
+    { name: 'Roadmap', ref: page6Ref },
+    { name: 'Contact', ref: page7Ref },
   ]
 
   return (
@@ -187,8 +190,13 @@ export default function Home() {
             <StatsSection />
           </div>
 
-          {/* Page 6 - Contact */}
-          <div ref={page6Ref} className="relative min-h-screen flex flex-col items-center justify-center p-4">
+          {/* Page 6 - Roadmap */}
+          <div ref={page6Ref} className="relative min-h-screen">
+            <RoadmapSection />
+          </div>
+
+          {/* Page 7 - Contact */}
+          <div ref={page7Ref} className="relative min-h-screen flex flex-col items-center justify-center p-4">
             <div className="w-full max-w-4xl text-center">
               <h2 className="text-3xl md:text-5xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
                 Get in Touch
