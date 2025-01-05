@@ -13,7 +13,6 @@ export function HeaderFooter({ children }: { children: React.ReactNode }) {
                             <Image src={LOGO} alt={"Logo"} className="" height={50}/>
                             <span className="font-bold text-xl">Diffusion</span>
                         </Link>
-
                         <Link href="/dashboard" className="text-white hover:text-gray-300 transition">
                             Dashboard
                         </Link>
@@ -22,6 +21,9 @@ export function HeaderFooter({ children }: { children: React.ReactNode }) {
                         </Link>
                         <Link href="/swap" className="text-white hover:text-gray-300 transition">
                             Swap
+                        </Link>
+                        <Link href="/pool" className="text-white hover:text-gray-300 transition">
+                            Pool
                         </Link>
                         <Link href="/bridge" className="text-white hover:text-gray-300 transition">
                             Bridge
