@@ -70,7 +70,7 @@ input::placeholder {
   background-color: #FF53C9;
 }
 
-.hover\:bg-#FF53C9/90:hover {
+.hover\:bg-#FF53C990:hover {
   background-color: rgba(255, 83, 201, 0.9);
 }
 

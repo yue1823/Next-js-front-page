@@ -1,11 +1,11 @@
 'use client'
 
 import { useState } from "react"
-import { ChevronDown, ArrowRight, ArrowUpDown, ChevronRight, ChevronLeft } from 'lucide-react'
+import { ChevronDown,  ArrowUpDown, ChevronRight, ChevronLeft } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { TokenSelectModal } from "@/components/token-select-modal"
-import { motion, AnimatePresence } from "framer-motion"
+
 import { HeaderFooter } from "@/components/header-footer"
 
 interface Token {

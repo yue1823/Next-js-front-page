@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { createChart } from 'lightweight-charts'
+import {createChart, DeepPartial, SolidColor} from 'lightweight-charts'
 
 export function TradingChart() {
   const chartContainerRef = useRef<HTMLDivElement>(null)
@@ -13,9 +13,9 @@ export function TradingChart() {
       layout: { 
         textColor: '#FFFFFF',
         background: { 
-          type: 'solid', 
-          color: '#1E2128' 
-        } 
+          type: "solid",
+          color: "#1E2128"
+        } as DeepPartial<SolidColor>
       },
       grid: {
         vertLines: { color: '#2B2B43' },

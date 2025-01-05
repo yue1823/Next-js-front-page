@@ -104,7 +104,8 @@ export function AttenuationChart({ b, a }: AttenuationChartProps) {
         window.addEventListener('resize', handleResize)
 
         return () => {
-            if (chartContainerRef.current) {
+            const currentRef = chartContainerRef.current;
+            if (currentRef) {
                 window.removeEventListener('resize', handleResize);
                 Plotly.purge(chartContainerRef.current);
             }
@@ -125,7 +126,7 @@ export function ExponentialDecayChart({ A, k, C }: ExponentialDecayChartProps) {
         const yValues = [1]
 
         for (let x = 0; x <= 100; x += 1) {
-            let y = A * Math.exp(-k * x) + C
+            const y = A * Math.exp(-k * x) + C
             yValues.push(y)
             xValues.push(x)
         }

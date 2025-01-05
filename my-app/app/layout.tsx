@@ -6,16 +6,12 @@ import { Toaster } from "@/components/ui/toaster";
 import {GoogleTagManager} from "@next/third-parties/google";
 import { AutoConnectProvider } from "@/components/Wallet/AutoConnectProvider";
 import { ReactQueryClientProvider } from '@/components/Wallet/ReactQueryClientProvider';
-import Wallet from "./wallet/page";
+
 
 import type { Metadata } from "next"
 
 import { Inter } from 'next/font/google'
-import Link from "next/link"
 
-
-import DIffusion_logo from "../components/logo/diffusion svg.svg"
-import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] })
 

@@ -1,13 +1,13 @@
 'use client'
 
-import { useRef, useEffect, useState } from 'react'
+import { useRef,  useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 import { Menu, X } from 'lucide-react'
 import BackgroundAnimation from '@/components/BackgroundAnimation'
 import StatsSection from '@/components/StatsSection'
-import { motion } from 'framer-motion'
+
 import Founder2_logo from "../components/logo/kelvin.jpg";
 import Founder1_logo from "../components/logo/yue_logo.svg";
 import logo_1 from "../components/logo/fixed.png";
@@ -203,7 +203,7 @@ export default function Home() {
                 Get in Touch
               </h2>
               <p className="text-xl text-gray-300 mb-12">
-                Have questions or want to learn more? We'd love to hear from you!
+                Have questions or want to learn more? We would love to hear from you!
               </p>
               <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-8 rounded-full text-lg transition-all duration-300 ease-in-out transform hover:scale-105">
                 Contact Us
