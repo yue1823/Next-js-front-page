@@ -4,7 +4,7 @@ import { useState } from "react"
 import { ChevronDown,  ArrowUpDown, ChevronRight, ChevronLeft } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
-import { TokenSelectModal } from "@/components/token-select-modal"
+import {popularTokens, TokenSelectModal} from "@/components/token-select-modal"
 
 import { HeaderFooter } from "@/components/header-footer"
 
@@ -12,6 +12,7 @@ interface Token {
   symbol: string
   name: string
   logo: string
+  contract:string
 }
 
 const swapMethods = ["Standard", "Flash Swap", "Cross-Chain"]
@@ -20,11 +21,7 @@ export default function Swap() {
   const [sellAmount, setSellAmount] = useState("")
   const [buyAmount, setBuyAmount] = useState("")
   const [isTokenModalOpen, setIsTokenModalOpen] = useState(false)
-  const [selectedSellToken, setSelectedSellToken] = useState<Token>({
-    symbol: "ETH",
-    name: "Ethereum",
-    logo: "/placeholder.svg?height=40&width=40"
-  })
+  const [selectedSellToken, setSelectedSellToken] = useState<Token>(popularTokens[0])
   const [selectedBuyToken, setSelectedBuyToken] = useState<Token | null>(null)
   const [activeTokenSelect, setActiveTokenSelect] = useState<'sell' | 'buy'>('buy')
   const [activeSwapMethod, setActiveSwapMethod] = useState(swapMethods[0])

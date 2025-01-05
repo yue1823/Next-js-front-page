@@ -9,6 +9,7 @@ import { TradingChart } from "@/components/trading-chart"
 import { motion, AnimatePresence } from "framer-motion"
 import dynamic from 'next/dynamic'
 import { HeaderFooter } from "@/components/header-footer"
+import {popularTokens} from "@/components/token-select-modal";
 
 const DynamicAttenuationChart = dynamic(() => import('@/components/attenuation-chart').then(mod => mod.AttenuationChart), { ssr: false })
 const DynamicExponentialDecayChart = dynamic(() => import('@/components/attenuation-chart').then(mod => mod.ExponentialDecayChart), { ssr: false })
@@ -17,6 +18,7 @@ interface Token {
     symbol: string
     name: string
     logo: string
+    contract:string
 }
 
 export default function Swap() {
@@ -24,11 +26,7 @@ export default function Swap() {
     const [sellAmount, setSellAmount] = useState("")
     const [buyAmount, setBuyAmount] = useState("")
     const [isTokenModalOpen, setIsTokenModalOpen] = useState(false)
-    const [selectedSellToken, setSelectedSellToken] = useState<Token>({
-        symbol: "ETH",
-        name: "Ethereum",
-        logo: "/placeholder.svg?height=40&width=40"
-    })
+    const [selectedSellToken, setSelectedSellToken] = useState<Token>(popularTokens[0])
     const [selectedBuyToken, setSelectedBuyToken] = useState<Token | null>(null)
     const [activeTokenSelect, setActiveTokenSelect] = useState<'sell' | 'buy'>('buy')
     const [isSwipedLeft, setIsSwipedLeft] = useState(false)

@@ -11,6 +11,7 @@ interface Token {
   symbol: string
   name: string
   logo: string
+  contract:string
 }
 
 interface TokenSelectModalProps {
@@ -19,10 +20,10 @@ interface TokenSelectModalProps {
   onSelect: (token: Token) => void
 }
 
-const popularTokens: Token[] = [
-  { symbol: "APT", name: "Ethereum", logo:APt_logo },
-  { symbol: "USDT", name: "Tether", logo: USDT_logo},
-  { symbol: "USDC", name: "USD Coin", logo: "/placeholder.svg?height=40&width=40" },
+export const popularTokens: Token[] = [
+  { symbol: "APT", name: "Ethereum", logo:APt_logo ,contract:""},
+  { symbol: "USDT", name: "Tether", logo: USDT_logo,contract:""},
+  { symbol: "USDC", name: "USD Coin", logo: "/placeholder.svg?height=40&width=40",contract:"" },
 ]
 
 export function TokenSelectModal({ isOpen, onClose, onSelect }: TokenSelectModalProps) {
