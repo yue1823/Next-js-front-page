@@ -1,6 +1,7 @@
 import Link from "next/link"
-import { Box } from 'lucide-react'
+import Image from "next/image"
 import Wallet from "@/app/wallet/page";
+import LOGO from "../components/logo/fixed.png";
 
 export function HeaderFooter({ children }: { children: React.ReactNode }) {
     return (
@@ -8,10 +9,11 @@ export function HeaderFooter({ children }: { children: React.ReactNode }) {
             <header className="flex-shrink-0 border-b border-gray-800">
                 <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-6">
-                        <Link href="/" className="flex items-center gap-2 text-white">
-                            <Box className="h-8 w-8"/>
-                            <span className="font-bold text-xl">LOGO</span>
+                        <Link href="/" className="flex items-center  text-white">
+                            <Image src={LOGO} alt={"Logo"} className="" height={50}/>
+                            <span className="font-bold text-xl">Diffusion</span>
                         </Link>
+
                         <Link href="/dashboard" className="text-white hover:text-gray-300 transition">
                             Dashboard
                         </Link>
