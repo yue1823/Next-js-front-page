@@ -6,11 +6,13 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Input } from "@/components/ui/input"
 import APt_logo from ".//logo/Aptos_mark_BLK.svg";
 import USDT_logo from "../components/logo/tether-usdt-logo.svg";
+import USDC_logo from "../components/logo/usd-coin-usdc-logo.svg"
 
 interface Token {
   symbol: string
   name: string
   logo: string
+  contract:string
 }
 
 interface TokenSelectModalProps {
@@ -19,10 +21,10 @@ interface TokenSelectModalProps {
   onSelect: (token: Token) => void
 }
 
-const popularTokens: Token[] = [
-  { symbol: "APT", name: "Ethereum", logo:APt_logo },
-  { symbol: "USDT", name: "Tether", logo: USDT_logo},
-  { symbol: "USDC", name: "USD Coin", logo: "/placeholder.svg?height=40&width=40" },
+export const popularTokens: Token[] = [
+  { symbol: "APT", name: "Ethereum", logo:APt_logo ,contract:""},
+  { symbol: "USDT", name: "Tether", logo: USDT_logo,contract:""},
+  { symbol: "USDC", name: "USD Coin", logo: USDC_logo,contract:"" },
 ]
 
 export function TokenSelectModal({ isOpen, onClose, onSelect }: TokenSelectModalProps) {
@@ -72,4 +74,5 @@ export function TokenSelectModal({ isOpen, onClose, onSelect }: TokenSelectModal
     </Dialog>
   )
 }
+
 
