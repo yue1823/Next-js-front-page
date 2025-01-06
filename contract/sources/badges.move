@@ -53,7 +53,7 @@ module deployer::badges {
         let detail = utf8(Token_name);
             string::append(&mut detail,id);
         let objsigner = &generate_signer_for_extending(&borrow_global<Collection_s_cap>(address_of(package_signer)).ext);
-        let token = create(objsigner,utf8(Name),utf8(Token_describe),detail,some(royalty),utf8(Token_url));
+        let token = token::create_numbered_token(objsigner,utf8(Name),utf8(Token_describe),utf8(b" #"),detail,some(royalty),utf8(Token_url));
         let extend=object::generate_extend_ref(&token);
         let trans = object::generate_transfer_ref(&token);
         let burn = generate_burn_ref(&token);
