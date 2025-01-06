@@ -11,7 +11,6 @@ swap = "0xf097f411ad5670266acb085413a4954fd4695735b44f6c1f6d8d4e5e30aaba64"
 [dev-addresses]
 
 
-
 [dependencies.AptosTokenObjects]
 git = "https://github.com/aptos-labs/aptos-core.git"
 rev = "mainnet"

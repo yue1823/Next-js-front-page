@@ -5,7 +5,7 @@ script {
     use deployer::faucet;
 
 
-    fun create_pool(){
+    fun create_pool(caller:&signer){
         let faucet_vector =faucet::faucet_data();
         let (usdt ,usdc)=faucet::return_coin_metadata(&faucet_vector);
         router::create_pool_coin<AptosCoin>(usdt,false);

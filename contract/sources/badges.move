@@ -86,8 +86,8 @@ module deployer::badges {
     }
 
     public entry fun mint_badges(caller:&signer) acquires Collection_data, Collection_s_cap {
-        let (mission1,misson2,mission3)=user_record::finish_mission(address_of(caller));
-        assert!((mission1 && misson2 && mission3)==true,error::not_implemented(E_not_finish));
+        // let (mission1,misson2,mission3)=user_record::finish_mission(address_of(caller));
+        // assert!((mission1 && misson2 && mission3)==true,error::not_implemented(E_not_finish));
         mint_action(caller);
     }
 
