@@ -35,11 +35,11 @@ module deployer::faucet {
         let faucet_Data=borrow_global<Faucet_data>(a);
         let return_vector = vector::empty<Coin_data>();
         vector::push_back(&mut return_vector,Coin_data{
-            name:fungible_asset::name(faucet_Data.usdt.meta),
+            name:fungible_asset::symbol(faucet_Data.usdt.meta),
             meta:faucet_Data.usdt.meta
         });
         vector::push_back(&mut return_vector,Coin_data{
-            name:fungible_asset::name(faucet_Data.usdc.meta),
+            name:fungible_asset::symbol(faucet_Data.usdc.meta),
             meta:faucet_Data.usdc.meta
         });
         return_vector
@@ -50,8 +50,8 @@ module deployer::faucet {
         let obj = object::create_named_object(signer,b"faucet");
         let usdt_Ref = object::create_named_object(signer,b"usdt");
         let usdc_Ref = object::create_named_object(signer,b"usdc");
-        primary_fungible_store::create_primary_store_enabled_fungible_asset(&usdt_Ref,none<u128>(),utf8(b""),utf8(b"USDT"),8,utf8(b"https://raw.githubusercontent.com/yue1823/diffusion/5df6274a48a1d4441a85c576cd154390126c8968/frontend/src/tether-usdt-logo.svg"),utf8(b"https://raw.githubusercontent.com/yue1823/diffusion/5df6274a48a1d4441a85c576cd154390126c8968/frontend/src/tether-usdt-logo.svg"));
-        primary_fungible_store::create_primary_store_enabled_fungible_asset(&usdc_Ref,none<u128>(),utf8(b""),utf8(b"USDC"),8,utf8(b"https://raw.githubusercontent.com/yue1823/diffusion/5df6274a48a1d4441a85c576cd154390126c8968/frontend/src/usd-coin-usdc-logo.svg"),utf8(b"https://raw.githubusercontent.com/yue1823/diffusion/5df6274a48a1d4441a85c576cd154390126c8968/frontend/src/usd-coin-usdc-logo.svg"));
+        primary_fungible_store::create_primary_store_enabled_fungible_asset(&usdt_Ref,none<u128>(),utf8(b"USDT"),utf8(b"USDT"),8,utf8(b"https://raw.githubusercontent.com/yue1823/diffusion/5df6274a48a1d4441a85c576cd154390126c8968/frontend/src/tether-usdt-logo.svg"),utf8(b"https://raw.githubusercontent.com/yue1823/diffusion/5df6274a48a1d4441a85c576cd154390126c8968/frontend/src/tether-usdt-logo.svg"));
+        primary_fungible_store::create_primary_store_enabled_fungible_asset(&usdc_Ref,none<u128>(),utf8(b"USDC"),utf8(b"USDC"),8,utf8(b"https://raw.githubusercontent.com/yue1823/diffusion/5df6274a48a1d4441a85c576cd154390126c8968/frontend/src/usd-coin-usdc-logo.svg"),utf8(b"https://raw.githubusercontent.com/yue1823/diffusion/5df6274a48a1d4441a85c576cd154390126c8968/frontend/src/usd-coin-usdc-logo.svg"));
         let usdt_mint_ref = fungible_asset::generate_mint_ref(&usdt_Ref);
         let usdc_mint_ref = fungible_asset::generate_mint_ref(&usdc_Ref);
         let usdt_meta = object_from_constructor_ref<Metadata>(&usdt_Ref);
@@ -96,5 +96,9 @@ module deployer::faucet {
         debug::print(&primary_fungible_store::balance(address_of(caller),vector::borrow(&vec,1).meta));
     }
 
+
+    public fun return_coin_metadata(vec:&vector<Coin_data>):(Object<Metadata>,Object<Metadata>){
+        (vector::borrow(vec,0).meta,vector::borrow(vec,1).meta)
+    }
 
 }

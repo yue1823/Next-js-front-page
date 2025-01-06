@@ -6,8 +6,8 @@ authors = []
 [addresses]
 aptos_framework = "0x1"
 royalty="0x296e53ce1956ebdef5d969f3189a00b0ca29f2d377b311e30872202d4072b19b"
-deployer = "0xabde8cd6f1218ae192b44a8786c8a276d0fb641cdd6e4dca11480cb6c924cfc0"
-swap = "0xcb104808bc58d83c8d2773cc89f75db383268e4df391ee5ec14ec1ee7c164297"
+deployer ="0xa71081d8ee3124403f9a178f0eb61c8ddf7c58ec215ed8b27a2af745f31a3d83"
+swap = "0xf097f411ad5670266acb085413a4954fd4695735b44f6c1f6d8d4e5e30aaba64"
 [dev-addresses]
 
 

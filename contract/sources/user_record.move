@@ -18,17 +18,19 @@ module deployer::user_record {
         tvl:u64,
         swap:bool,
         liquidity:bool,
+        remove:bool
     }
 
     struct User_record has key,store{
-        data:SmartTable<address,Person_record>
+        data:SmartTable<address,Person_record>,
+        tvl:u128
     }
 
     #[view]
-    public fun finish_mission(target:address):(bool,bool) acquires User_record {
+    public fun finish_mission(target:address):(bool,bool,bool) acquires User_record {
         let borrow  =borrow_data();
         assert!(smart_table::contains(&borrow.data,target)==true,error::not_implemented(E_not_exists_user));
-        ( smart_table::borrow(&borrow.data,target).swap,smart_table::borrow(&borrow.data,target).liquidity)
+        ( smart_table::borrow(&borrow.data,target).swap,smart_table::borrow(&borrow.data,target).liquidity,smart_table::borrow(&borrow.data,target).remove)
     }
     #[view]
     public fun check_user_exists(target:address):bool acquires User_record {
@@ -38,7 +40,8 @@ module deployer::user_record {
 
     fun init_module(caller:&signer){
         move_to(&package_manager::get_signer(),User_record{
-            data:smart_table::new<address,Person_record>()
+            data:smart_table::new<address,Person_record>(),
+            tvl:0
         });
     }
     inline fun borrow_data():&mut User_record{
@@ -54,9 +57,10 @@ module deployer::user_record {
             a.swap = true ;
         }else{
             smart_table::add(&mut borrow.data,address_of(caller),Person_record{
-                time:1,tvl:amount,swap:false,liquidity:false
+                time:1,tvl:amount,swap:false,liquidity:false,remove:false
             })
-        }
+        };
+        borrow.tvl = borrow.tvl +(amount as u128);
     }
     public fun add_record_liquity(caller:&signer,amount:u64) acquires User_record {
         let borrow  =borrow_data();
@@ -68,9 +72,25 @@ module deployer::user_record {
             a.liquidity = true ;
         }else{
             smart_table::add(&mut borrow.data,address_of(caller),Person_record{
-                time:1,tvl:amount,swap:false,liquidity:false
+                time:1,tvl:amount,swap:false,liquidity:false,remove:false
             })
-        }
+        };
+        borrow.tvl = borrow.tvl + (amount as u128);
+    }
+    public fun add_record_remove(caller:&signer,amount:u64) acquires User_record {
+        let borrow  =borrow_data();
+        let have= smart_table::contains(&mut borrow.data,address_of(caller));
+        if(have){
+            let a =smart_table::borrow_mut(&mut borrow.data,address_of(caller));
+            a.time=a.time+1;
+            a.tvl=a.tvl+amount;
+            a.remove = true ;
+        }else{
+            smart_table::add(&mut borrow.data,address_of(caller),Person_record{
+                time:1,tvl:amount,swap:false,liquidity:false,remove:false
+            })
+        };
+        borrow.tvl = borrow.tvl - (amount as u128);
     }
 
     #[test(caller=@swap,user=@0x123)]
@@ -81,12 +101,15 @@ module deployer::user_record {
         // debug::print(&check_user_exists(address_of(user)));
         add_record_interace(user,123);
         //debug::print(&utf8(b"User exists?"));
-        let(mission1,mission2)=finish_mission(address_of(user));
+        let(mission1,mission2,mission3)=finish_mission(address_of(user));
         // debug::print(&mission1);
         // debug::print(&mission2);
         // debug::print(&check_user_exists(address_of(user)));
 
     }
-
+    #[test_only]
+    public fun call_init_module(caller:&signer){
+        init_module(caller)
+    }
 
 }

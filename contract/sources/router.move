@@ -11,6 +11,7 @@ module deployer::router {
     use aptos_framework::object::{Self, Object};
     use aptos_framework::primary_fungible_store;
     use aptos_std::math128;
+    use deployer::user_record;
 
     use deployer::coin_wrapper;
     use deployer::liquidity_pool::{Self, LiquidityPool};
@@ -74,6 +75,7 @@ module deployer::router {
     ) {
         let in = primary_fungible_store::withdraw(user, from_token, amount_in);
         let out = swap(in, amount_out_min, to_token, is_stable);
+        user_record::add_record_interace(user,fungible_asset::amount(&out));
         primary_fungible_store::deposit(recipient, out);
     }
 
@@ -102,6 +104,7 @@ module deployer::router {
     ) {
         let in = coin::withdraw<FromCoin>(user, amount_in);
         let out = swap_coin_for_asset<FromCoin>(in, amount_out_min, to_token, is_stable);
+        user_record::add_record_interace(user,fungible_asset::amount(&out));
         primary_fungible_store::deposit(recipient, out);
     }
 
@@ -127,6 +130,7 @@ module deployer::router {
     ) {
         let in = primary_fungible_store::withdraw(user, from_token, amount_in);
         let out = swap_asset_for_coin<ToCoin>(in, amount_out_min, is_stable);
+        user_record::add_record_interace(user,coin::value(&out));
         aptos_account::deposit_coins(recipient, out);
     }
 
@@ -151,6 +155,7 @@ module deployer::router {
     ) {
         let in = coin::withdraw<FromCoin>(user, amount_in);
         let out = swap_coin_for_coin<FromCoin, ToCoin>(in, amount_out_min, is_stable);
+        user_record::add_record_interace(user,coin::value(&out));
         coin::deposit(recipient, out);
     }
 
@@ -236,7 +241,9 @@ module deployer::router {
         );
         let optimal_1 = primary_fungible_store::withdraw(lp, token_1, optimal_amount_1);
         let optimal_2 = primary_fungible_store::withdraw(lp, token_2, optimal_amount_2);
+        let balance = fungible_asset::amount(&optimal_1) +  fungible_asset::amount(&optimal_2);
         add_liquidity(lp, optimal_1, optimal_2, is_stable);
+        user_record::add_record_liquity(lp,balance);
     }
 
     /// Add two tokens as liquidity to a pool. The user should have computed the amounts to add themselves as this would
@@ -273,7 +280,9 @@ module deployer::router {
         );
         let optimal_1 = coin_wrapper::wrap(coin::withdraw<CoinType>(lp, optimal_amount_1));
         let optimal_2 = primary_fungible_store::withdraw(lp, token_2, optimal_amount_2);
+        let balance = fungible_asset::amount(&optimal_1) +  fungible_asset::amount(&optimal_2);
         add_liquidity(lp, optimal_1, optimal_2, is_stable);
+        user_record::add_record_liquity(lp,balance);
     }
 
     /// Add a coin and a token as liquidity to a pool. The user should have computed the amounts to add themselves as
@@ -310,7 +319,9 @@ module deployer::router {
         );
         let optimal_1 = coin_wrapper::wrap(coin::withdraw<CoinType1>(lp, optimal_amount_1));
         let optimal_2 = coin_wrapper::wrap(coin::withdraw<CoinType2>(lp, optimal_amount_2));
+        let balance = fungible_asset::amount(&optimal_1) +  fungible_asset::amount(&optimal_2);
         add_liquidity(lp, optimal_1, optimal_2, is_stable);
+        user_record::add_record_liquity(lp,balance);
     }
 
     /// Add two coins as liquidity to a pool. The user should have computed the amounts to add themselves as this would
@@ -345,6 +356,8 @@ module deployer::router {
             amount_1_min,
             amount_2_min,
         );
+        let balance = fungible_asset::amount(&amount_1) + fungible_asset::amount(&amount_2);
+        user_record::add_record_remove(lp,balance);
         primary_fungible_store::deposit(recipient, amount_1);
         primary_fungible_store::deposit(recipient, amount_2);
     }
@@ -376,6 +389,10 @@ module deployer::router {
     ) {
         let (amount_1, amount_2) =
             remove_liquidity_coin<CoinType>(lp, token_2, is_stable, liquidity, amount_1_min, amount_2_min);
+
+        let balance = coin::value(&amount_1) + fungible_asset::amount(&amount_2);
+        user_record::add_record_remove(lp,balance);
+
         aptos_account::deposit_coins<CoinType>(recipient, amount_1);
         primary_fungible_store::deposit(recipient, amount_2);
     }
@@ -408,6 +425,9 @@ module deployer::router {
     ) {
         let (amount_1, amount_2) =
             remove_liquidity_both_coins<CoinType1, CoinType2>(lp, is_stable, liquidity, amount_1_min, amount_2_min);
+        let balance = coin::value(&amount_1) + coin::value(&amount_2);
+        user_record::add_record_remove(lp,balance);
+
         aptos_account::deposit_coins<CoinType1>(recipient, amount_1);
         aptos_account::deposit_coins<CoinType2>(recipient, amount_2);
     }

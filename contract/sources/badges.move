@@ -1,5 +1,6 @@
 module deployer::badges {
 
+    use std::error;
     use std::option::{none, some};
     use std::signer::address_of;
     use std::string;
@@ -8,10 +9,12 @@ module deployer::badges {
     use aptos_framework::event::emit;
     use aptos_framework::object;
     use aptos_framework::object::{generate_signer, ExtendRef, TransferRef, Transfer, generate_linear_transfer_ref,
-        generate_extend_ref, generate_signer_for_extending
+        generate_extend_ref, generate_signer_for_extending, address_from_constructor_ref
     };
     use aptos_framework::timestamp;
     use aptos_token_objects::aptos_token;
+    use aptos_token_objects::aptos_token::mint;
+
 
     use deployer::package_manager;
     use aptos_token_objects::collection;
@@ -19,14 +22,18 @@ module deployer::badges {
     use aptos_token_objects::royalty;
     use aptos_token_objects::royalty::Royalty;
     use aptos_token_objects::token;
-    use aptos_token_objects::token::{create, BurnRef, generate_burn_ref, MutatorRef};
+    use aptos_token_objects::token::{ BurnRef, generate_burn_ref, MutatorRef};
+    use deployer::user_record;
 
     const Name : vector<u8> = b"Diffusion Badges";
     const Describe : vector<u8> = b"Badges of diffusion for the future ";
-    const GIF_url: vector<u8> =b"https://github.com/yue1823/diffusion/blob/vite_branch/frontend/gif.gif?raw=true";
-    const Token_url: vector<u8> =b"https://github.com/yue1823/diffusion/blob/vite_branch/frontend/early%20bird.gif?raw=true";
+    const GIF_url: vector<u8> =b"https://image-mys.4everland.store/gif%E6%8B%B7%E8%B2%9D.gif";
+    const Token_url: vector<u8> =b"https://image-mys.4everland.store/early%20bird.gif";
     const Token_describe: vector<u8> = b"Early Prove of diffusion";
     const Token_name: vector<u8> = b"Early Bird Badges";
+
+    ///user not finish required
+    const E_not_finish:u64 =1;
 
     #[event]
     struct Mint_token has copy,drop,store{
@@ -45,22 +52,25 @@ module deployer::badges {
     struct Collection_data has key,store{
         id:u64
     }
-    public entry fun mint_badges(caller:&signer) acquires Collection_data, Collection_s_cap {
+    fun mint_action(caller:&signer) acquires Collection_data, Collection_s_cap {
         let package_signer = &package_manager::get_signer();
         let borrow = borrow_global_mut<Collection_data>(object::create_object_address(&address_of(package_signer),b"badges"));
         let id = string_utils::to_string(&borrow.id);
         let royalty = royalty::create(20,100,@royalty);
         let detail = utf8(Token_name);
-            string::append(&mut detail,id);
+        string::append(&mut detail,utf8(b" #"));
+        string::append(&mut detail,id);
         let objsigner = &generate_signer_for_extending(&borrow_global<Collection_s_cap>(address_of(package_signer)).ext);
-        let token = token::create_numbered_token(objsigner,utf8(Name),utf8(Token_describe),utf8(b" #"),detail,some(royalty),utf8(Token_url));
+        let token = token::create(objsigner,utf8(Name),utf8(Token_describe),detail,some(royalty),utf8(Token_url));
+
+
         let extend=object::generate_extend_ref(&token);
         let trans = object::generate_transfer_ref(&token);
         let burn = generate_burn_ref(&token);
-        let one_time_code = generate_linear_transfer_ref(&trans);
+        // let one_time_code = generate_linear_transfer_ref(&trans);
         let mutor = token::generate_mutator_ref(&token);
-
-        move_to(&generate_signer(&token),Token_cap{
+        let  token_signer =&generate_signer(&token);
+        move_to(token_signer,Token_cap{
             exten_Ref:extend,
             tran_ref:trans,
             burn_ref:burn,
@@ -70,8 +80,15 @@ module deployer::badges {
             owner:address_of(caller),
             mint_time:timestamp::now_seconds()
         });
-        object::transfer_with_ref(one_time_code,address_of(caller));
+        let meta_data = object::object_from_constructor_ref<Token_cap>(&token);
+        object::transfer(objsigner,meta_data,address_of(caller));
         borrow.id = borrow.id +1 ;
+    }
+
+    public entry fun mint_badges(caller:&signer) acquires Collection_data, Collection_s_cap {
+        let (mission1,misson2,mission3)=user_record::finish_mission(address_of(caller));
+        assert!((mission1 && misson2 && mission3)==true,error::not_implemented(E_not_finish));
+        mint_action(caller);
     }
 
     fun init_module(caller:&signer){
@@ -85,8 +102,10 @@ module deployer::badges {
         move_to(obj_signer,Collection_data{id:0});
     }
     #[test(caller=@swap)]
+    #[expected_failure(abort_code = 1)]
     fun test_badges(caller:&signer) acquires Collection_data, Collection_s_cap {
         package_manager::initialize_for_test(caller);
+        user_record::call_init_module(caller);
         init_module(caller);
         mint_badges(caller)
     }
