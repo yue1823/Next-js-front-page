@@ -52,6 +52,11 @@ module deployer::badges {
     struct Collection_data has key,store{
         id:u64
     }
+    #[view]
+    public fun check_all_date():(u128,u64,u64) acquires Collection_data {
+        let (r1,r2)=user_record::check_record();
+        (r1,r2,get_badges_id())
+    }
     fun mint_action(caller:&signer) acquires Collection_data, Collection_s_cap {
         let package_signer = &package_manager::get_signer();
         let borrow = borrow_global_mut<Collection_data>(object::create_object_address(&address_of(package_signer),b"badges"));
@@ -86,8 +91,8 @@ module deployer::badges {
     }
 
     public entry fun mint_badges(caller:&signer) acquires Collection_data, Collection_s_cap {
-        // let (mission1,misson2,mission3)=user_record::finish_mission(address_of(caller));
-        // assert!((mission1 && misson2 && mission3)==true,error::not_implemented(E_not_finish));
+        let (mission1,misson2,mission3)=user_record::finish_mission(address_of(caller));
+        assert!((mission1 && misson2 && mission3)==true,error::not_implemented(E_not_finish));
         mint_action(caller);
     }
 
@@ -108,5 +113,11 @@ module deployer::badges {
         user_record::call_init_module(caller);
         init_module(caller);
         mint_badges(caller)
+    }
+
+    public fun get_badges_id():u64 acquires Collection_data {
+        let package_signer = &package_manager::get_signer();
+        let borrow = borrow_global_mut<Collection_data>(object::create_object_address(&address_of(package_signer),b"badges"));
+        borrow.id
     }
 }

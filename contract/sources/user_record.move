@@ -4,6 +4,7 @@ module deployer::user_record {
     use std::signer::address_of;
     use aptos_std::smart_table;
     use aptos_std::smart_table::SmartTable;
+    use deployer::badges;
     use deployer::package_manager;
     #[test_only]
     use std::string::utf8;
@@ -36,6 +37,10 @@ module deployer::user_record {
     public fun check_user_exists(target:address):bool acquires User_record {
         let value =smart_table::contains(&borrow_data().data,target);
         value
+    }
+    public fun check_record():(u128,u64) acquires User_record {
+        let borrow  =borrow_data();
+        (borrow.tvl,smart_table::length(&borrow.data))
     }
 
     fun init_module(caller:&signer){
