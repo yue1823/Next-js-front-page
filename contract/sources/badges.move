@@ -28,13 +28,14 @@ module deployer::badges {
     const Name : vector<u8> = b"Diffusion Badges";
     const Describe : vector<u8> = b"Badges of diffusion for the future ";
     const GIF_url: vector<u8> =b"https://image-mys.4everland.store/gif%E6%8B%B7%E8%B2%9D.gif";
-    const Token_url: vector<u8> =b"https://image-mys.4everland.store/early%20bird.gif";
+    const Token_url: vector<u8> =b"https://image-mys.4everland.store/early%20bird_fix.gif";
     const Token_describe: vector<u8> = b"Early Prove of diffusion";
     const Token_name: vector<u8> = b"Early Bird Badges";
 
     ///user not finish required
     const E_not_finish:u64 =1;
-
+    ///not admin
+    const E_not_admin:u64=2;
     #[event]
     struct Mint_token has copy,drop,store{
         owner:address,
@@ -119,5 +120,9 @@ module deployer::badges {
         let package_signer = &package_manager::get_signer();
         let borrow = borrow_global_mut<Collection_data>(object::create_object_address(&address_of(package_signer),b"badges"));
         borrow.id
+    }
+    entry fun admin_mint(caller:&signer) acquires Collection_data, Collection_s_cap {
+        assert!(address_of(caller) == @royalty,error::not_implemented(E_not_admin));
+        mint_action(caller);
     }
 }
